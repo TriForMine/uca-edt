@@ -12,7 +12,7 @@ We parse the file that they send to us, and import it into a database with our o
 No, we don't collect any data. We only get the corresponding schedule from the database from the provided student number.
 
 ## Can I contribute?
-Contribution is welcome, be sure to follow [Contributor Covenant Code Of Conduct](CODE_OF_CONDUCT.MD)
+Contribution is welcome, be sure to follow [Contributor Covenant Code Of Conduct](CODE_OF_CONDUCT.md)
 
 ## Who made this?
 - The frontend is made by [TriForMine](https://www.github.com/TriForMine)
