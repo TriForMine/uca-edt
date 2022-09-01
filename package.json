@@ -40,6 +40,6 @@
     "@types/react": "latest",
     "eslint": "latest",
     "eslint-config-next": "latest",
-    "typescript": "latesty"
+    "typescript": "latest"
   }
 }
