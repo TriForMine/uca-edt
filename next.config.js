@@ -6,7 +6,8 @@ const withPreact = require('next-plugin-preact');
 /** @type {import('next').NextConfig} */
 const nextConfig = withPreact(withBundleAnalyzer({
   reactStrictMode: true,
-  swcMinify: true
+  swcMinify: true,
+  output: 'standalone'
 }))
 
 module.exports = nextConfig
