@@ -184,7 +184,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@devexpress/dx-react-core@npm:^3.0.5":
+"@devexpress/dx-react-core@npm:3.0.5":
   version: 3.0.5
   resolution: "@devexpress/dx-react-core@npm:3.0.5"
   dependencies:
@@ -197,7 +197,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@devexpress/dx-react-scheduler-material-ui@npm:^3.0.5":
+"@devexpress/dx-react-scheduler-material-ui@npm:3.0.5":
   version: 3.0.5
   resolution: "@devexpress/dx-react-scheduler-material-ui@npm:3.0.5"
   dependencies:
@@ -220,7 +220,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@devexpress/dx-react-scheduler@npm:^3.0.5":
+"@devexpress/dx-react-scheduler@npm:3.0.5":
   version: 3.0.5
   resolution: "@devexpress/dx-react-scheduler@npm:3.0.5"
   dependencies:
@@ -235,7 +235,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@devexpress/dx-scheduler-core@npm:3.0.5, @devexpress/dx-scheduler-core@npm:^3.0.5":
+"@devexpress/dx-scheduler-core@npm:3.0.5":
   version: 3.0.5
   resolution: "@devexpress/dx-scheduler-core@npm:3.0.5"
   dependencies:
@@ -640,7 +640,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/x-date-pickers@npm:^5.0.0-beta.7":
+"@mui/x-date-pickers@npm:5.0.0-beta.7":
   version: 5.0.0-beta.7
   resolution: "@mui/x-date-pickers@npm:5.0.0-beta.7"
   dependencies:
@@ -684,7 +684,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/bundle-analyzer@npm:^12.2.5":
+"@next/bundle-analyzer@npm:12.2.5":
   version: 12.2.5
   resolution: "@next/bundle-analyzer@npm:12.2.5"
   dependencies:
@@ -1358,7 +1358,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-env@npm:^7.0.3":
+"cross-env@npm:7.0.3":
   version: 7.0.3
   resolution: "cross-env@npm:7.0.3"
   dependencies:
@@ -2616,7 +2616,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-plugin-preact@npm:^3.0.7":
+"next-plugin-preact@npm:3.0.7":
   version: 3.0.7
   resolution: "next-plugin-preact@npm:3.0.7"
   dependencies:
@@ -2631,7 +2631,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-seo@npm:^5.5.0":
+"next-seo@npm:5.5.0":
   version: 5.5.0
   resolution: "next-seo@npm:5.5.0"
   peerDependencies:
@@ -2936,7 +2936,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"preact@npm:^10.10.6":
+"preact@npm:10.10.6":
   version: 10.10.6
   resolution: "preact@npm:10.10.6"
   checksum: 86b774403dfd538a674f325ea430be28bef1e6feb4e885ee83f1f7ccae7f647283d11e6e7ce259124c7309773bbf9b18f55543f43b501af644a6adc932b9f2b5
@@ -2989,7 +2989,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-auth-code-input@npm:^3.2.1":
+"react-auth-code-input@npm:3.2.1":
   version: 3.2.1
   resolution: "react-auth-code-input@npm:3.2.1"
   peerDependencies:
@@ -3538,30 +3538,30 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "uca-edt@workspace:."
   dependencies:
-    "@devexpress/dx-react-core": "npm:^3.0.5"
-    "@devexpress/dx-react-scheduler": "npm:^3.0.5"
-    "@devexpress/dx-react-scheduler-material-ui": "npm:^3.0.5"
-    "@devexpress/dx-scheduler-core": "npm:^3.0.5"
+    "@devexpress/dx-react-core": "npm:3.0.5"
+    "@devexpress/dx-react-scheduler": "npm:3.0.5"
+    "@devexpress/dx-react-scheduler-material-ui": "npm:3.0.5"
+    "@devexpress/dx-scheduler-core": "npm:3.0.5"
     "@emotion/cache": "npm:latest"
     "@emotion/react": "npm:latest"
     "@emotion/server": "npm:latest"
     "@emotion/styled": "npm:latest"
     "@mui/icons-material": "npm:latest"
     "@mui/material": "npm:latest"
-    "@mui/x-date-pickers": "npm:^5.0.0-beta.7"
-    "@next/bundle-analyzer": "npm:^12.2.5"
+    "@mui/x-date-pickers": "npm:5.0.0-beta.7"
+    "@next/bundle-analyzer": "npm:12.2.5"
     "@types/node": "npm:latest"
     "@types/react": "npm:latest"
-    cross-env: "npm:^7.0.3"
+    cross-env: "npm:7.0.3"
     eslint: "npm:latest"
     eslint-config-next: "npm:latest"
     next: "npm:latest"
-    next-plugin-preact: "npm:^3.0.7"
-    next-seo: "npm:^5.5.0"
-    preact: "npm:^10.10.6"
+    next-plugin-preact: "npm:3.0.7"
+    next-seo: "npm:5.5.0"
+    preact: "npm:10.10.6"
     preact-render-to-string: "npm:latest"
     react: "npm:@preact/compat@latest"
-    react-auth-code-input: "npm:^3.2.1"
+    react-auth-code-input: "npm:3.2.1"
     react-dom: "npm:@preact/compat@latest"
     react-ssr-prepass: "npm:preact-ssr-prepass@latest"
     typescript: "npm:latest"
