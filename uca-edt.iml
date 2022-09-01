@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/.yarn/unplugged/esbuild-npm-0.14.54-b3dcd8a41e/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/.yarn/unplugged/esbuild-windows-64-npm-0.14.54-5c15fbbf87/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/.yarn/unplugged/node-gyp-npm-9.1.0-2091059b31/node_modules" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
