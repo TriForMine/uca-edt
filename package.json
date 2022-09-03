@@ -27,6 +27,7 @@
     "next": "latest",
     "next-plugin-preact": "3.0.7",
     "next-seo": "5.5.0",
+    "node-xlsx": "^0.21.0",
     "preact": "10.10.6",
     "preact-render-to-string": "latest",
     "react": "npm:@preact/compat@latest",
@@ -37,9 +38,14 @@
   "devDependencies": {
     "@next/bundle-analyzer": "12.2.5",
     "@types/node": "latest",
+    "@types/prettier": "^2",
     "@types/react": "latest",
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
     "eslint": "latest",
     "eslint-config-next": "latest",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.7.1",
     "typescript": "latest"
   },
   "nextBundleAnalysis": {

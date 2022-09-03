@@ -1,13 +1,11 @@
-import * as React from 'react';
-import {
-	AppointmentTooltip,
-} from '@devexpress/dx-react-scheduler-material-ui';
-import Grid from '@mui/material/Grid';
-import Room from '@mui/icons-material/Room';
-import { styled } from '@mui/material/styles';
+import * as React from "react";
+import { AppointmentTooltip } from "@devexpress/dx-react-scheduler-material-ui";
+import Grid from "@mui/material/Grid";
+import Room from "@mui/icons-material/Room";
+import { styled } from "@mui/material/styles";
 import AppointmentContentProps = AppointmentTooltip.ContentProps;
 
-const PREFIX = 'Content';
+const PREFIX = "Content";
 
 const classes = {
 	icon: `${PREFIX}-icon`,
@@ -17,7 +15,7 @@ const classes = {
 
 const StyledGrid = styled(Grid)(() => ({
 	[`&.${classes.textCenter}`]: {
-		textAlign: 'center',
+		textAlign: "center",
 	},
 }));
 
@@ -27,18 +25,20 @@ const StyledRoom = styled(Room)(({ theme: { palette } }) => ({
 	},
 }));
 
-const StyledContent = styled(AppointmentTooltip.Content)(({ theme: { spacing, palette }, appointmentData }) => {
-
-	return {
-		[`& .${classes.lens}`]: {
-			color: appointmentData?.color
-		},
+const StyledContent = styled(AppointmentTooltip.Content)(
+	({ appointmentData }) => {
+		return {
+			[`& .${classes.lens}`]: {
+				color: appointmentData?.color,
+			},
+		};
 	}
-});
+);
 
-export const CustomTooltipContent = (({
-					  children, appointmentData, ...restProps
-				  }: AppointmentContentProps) => (
+export const CustomTooltipContent = ({
+	appointmentData,
+	...restProps
+}: AppointmentContentProps) => (
 	<StyledContent {...restProps} appointmentData={appointmentData}>
 		<Grid container alignItems="center">
 			<StyledGrid item xs={2} className={classes.textCenter}>
@@ -49,4 +49,4 @@ export const CustomTooltipContent = (({
 			</Grid>
 		</Grid>
 	</StyledContent>
-));
+);
