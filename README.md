@@ -15,5 +15,5 @@ No, we don't collect any data. We only get the corresponding schedule from the d
 Contribution is welcome, be sure to follow [Contributor Covenant Code Of Conduct](CODE_OF_CONDUCT.md)
 
 ## Who made this?
-- The frontend is made by [TriForMine](https://www.github.com/TriForMine)
-- The backend is made by [CorentinGS](https://github.com/CorentinGS/)
+- The frontend and the [xlsx parser](https://github.com/TriForMine/uca-edt-parser) is made by [TriForMine](https://www.github.com/TriForMine)
+- The [backend](https://github.com/CorentinGS/uca-edt) is made by [CorentinGS](https://github.com/CorentinGS/)
