@@ -1,5 +1,5 @@
 import * as React from "react";
-import type { NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -24,6 +24,7 @@ import { Alert, Button, Stack, useMediaQuery } from "@mui/material";
 import Link from "next/link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useTheme } from "@mui/system";
+import axios from "axios";
 
 const schedulerData = [
 	{
@@ -118,6 +119,31 @@ const Home: NextPage = () => {
 			</Scheduler>
 		</Container>
 	);
+};
+
+export async function getStaticPaths() {
+	return {
+		paths: [],
+		fallback: true, // can also be true or 'blocking'
+	};
+}
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+	console.log(params);
+
+	// `getStaticProps` is executed on the server side.
+	const edt = await axios.get(
+		`https://api-uca-edt.triformine.dev/api/edt/${params?.INE}`
+	);
+	const path = `/edt/${params?.INE}`;
+
+	return {
+		props: {
+			fallback: {
+				path: edt,
+			},
+		},
+	};
 };
 
 export default Home;
