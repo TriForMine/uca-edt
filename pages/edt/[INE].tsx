@@ -94,39 +94,59 @@ const EDT: NextPage = (
 
 	if (!edt) return <CircularProgress />;
 
-	const schedulerData = edt.edt.map((course) => {
-		const startHour = hourStringToHourMinutes(
-			course.hour?.split("-")[0].trim()
-		);
-		const endHour = hourStringToHourMinutes(
-			course.hour?.split("-")[1].trim()
-		);
+	const schedulerData = edt.edt
+		.filter((course) => {
+			return !(
+				course.type === "CM" &&
+				edt.edt.find(
+					(other_course) =>
+						other_course.type !== "CM" &&
+						course.name === other_course.name &&
+						course.hour === other_course.hour &&
+						course.day === other_course.day
+				)
+			);
+		})
+		.map((course) => {
+			const startHour = hourStringToHourMinutes(
+				course.hour
+					?.replaceAll("8-10H", "08h00-10h00")
+					.split("-")[0]
+					.trim()
+			);
 
-		return {
-			title: `${course.type} - ${course.name}`,
-			color: stringToColor(`${course.name}`),
-			location: course.salle,
-			startDate: new Date(
-				2022,
-				8,
-				5 +
-					calculateDayOffset(course.day) +
-					(course.type != "CM" ? 7 : 0),
-				startHour.hours,
-				startHour.minutes
-			),
-			endDate: new Date(
-				2022,
-				8,
-				5 +
-					calculateDayOffset(course.day) +
-					(course.type != "CM" ? 7 : 0),
-				endHour.hours,
-				endHour.minutes
-			),
-			rRule: "FREQ=WEEKLY;COUNT=12",
-		};
-	});
+			const endHour = hourStringToHourMinutes(
+				course.hour
+					?.replaceAll("8-10H", "08h00-10h00")
+					.split("-")[1]
+					.trim()
+			);
+
+			return {
+				title: `${course.type} - ${course.name}`,
+				color: stringToColor(`${course.name}`),
+				location: course.salle,
+				startDate: new Date(
+					2022,
+					8,
+					5 +
+						calculateDayOffset(course.day) +
+						(course.type != "CM" ? 7 : 0),
+					startHour.hours,
+					startHour.minutes
+				),
+				endDate: new Date(
+					2022,
+					8,
+					5 +
+						calculateDayOffset(course.day) +
+						(course.type != "CM" ? 7 : 0),
+					endHour.hours,
+					endHour.minutes
+				),
+				rRule: "FREQ=WEEKLY;COUNT=12",
+			};
+		});
 
 	return (
 		<Container maxWidth="lg">
