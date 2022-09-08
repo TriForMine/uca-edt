@@ -39,6 +39,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { EDT } from "../../src/types";
+import { NextSeo } from "next-seo";
 
 const calculateDayOffset = (day: EDT["edt"][0]["day"]) => {
 	switch (day) {
@@ -149,76 +150,79 @@ const EDT: NextPage = (
 		});
 
 	return (
-		<Container maxWidth="lg">
-			<Box
-				sx={{
-					my: 4,
-					display: "flex",
-					flexDirection: "column",
-					justifyContent: "center",
-					alignItems: "center",
-				}}
-			>
-				<Stack
-					sx={{ width: "100%" }}
-					direction="row"
-					justifyContent="left"
+		<>
+			<NextSeo title="Votre Emploi Du Temps" />
+			<Container maxWidth="lg">
+				<Box
+					sx={{
+						my: 4,
+						display: "flex",
+						flexDirection: "column",
+						justifyContent: "center",
+						alignItems: "center",
+					}}
 				>
-					<Link href="/" passHref>
-						<Button startIcon={<ArrowBackIcon />} color="error">
-							Changer d&apos;étudiant
-						</Button>
-					</Link>
-				</Stack>
+					<Stack
+						sx={{ width: "100%" }}
+						direction="row"
+						justifyContent="left"
+					>
+						<Link href="/" passHref>
+							<Button startIcon={<ArrowBackIcon />} color="error">
+								Changer d&apos;étudiant
+							</Button>
+						</Link>
+					</Stack>
 
-				<Typography variant="h4" component="h1" gutterBottom>
-					Votre emploi du temps
-				</Typography>
+					<Typography variant="h4" component="h1" gutterBottom>
+						Votre emploi du temps
+					</Typography>
 
-				<Alert variant="outlined" severity="warning">
-					L&apos;emploi du temps est généré automatiquement, est peut
-					contenir des erreurs.
-					<br />
-					Veuillez vous référer à votre emploi du temps officiel, ou
-					aux dernières informations reçues.
-				</Alert>
-			</Box>
-			{/*
+					<Alert variant="outlined" severity="warning">
+						L&apos;emploi du temps est généré automatiquement, est
+						peut contenir des erreurs.
+						<br />
+						Veuillez vous référer à votre emploi du temps officiel,
+						ou aux dernières informations reçues.
+					</Alert>
+				</Box>
+				{/*
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore */}
-			<Scheduler locale="fr-fr" data={schedulerData}>
-				<ViewState />
-				{showWeekView ? (
-					<WeekView
-						cellDuration={60}
-						excludedDays={[0, 6]}
-						startDayHour={8}
-						endDayHour={20}
+				<Scheduler locale="fr-fr" data={schedulerData}>
+					<ViewState />
+					{showWeekView ? (
+						<WeekView
+							cellDuration={60}
+							excludedDays={[0, 6]}
+							startDayHour={8}
+							endDayHour={20}
+						/>
+					) : (
+						<DayView
+							cellDuration={60}
+							startDayHour={8}
+							endDayHour={20}
+						/>
+					)}
+					<Appointments
+						appointmentContentComponent={CustomAppointmentContent}
+						appointmentComponent={CustomAppointment}
 					/>
-				) : (
-					<DayView
-						cellDuration={60}
-						startDayHour={8}
-						endDayHour={20}
+					<AppointmentTooltip
+						contentComponent={CustomTooltipContent}
+						showCloseButton
 					/>
-				)}
-				<Appointments
-					appointmentContentComponent={CustomAppointmentContent}
-					appointmentComponent={CustomAppointment}
-				/>
-				<AppointmentTooltip
-					contentComponent={CustomTooltipContent}
-					showCloseButton
-				/>
-				<CurrentTimeIndicator
-					shadePreviousAppointments
-					shadePreviousCells
-				/>
-				<Toolbar />
-				<DateNavigator />
-				<TodayButton messages={{ today: "Aujourd'hui" }} />
-			</Scheduler>
-		</Container>
+					<CurrentTimeIndicator
+						shadePreviousAppointments
+						shadePreviousCells
+					/>
+					<Toolbar />
+					<DateNavigator />
+					<TodayButton messages={{ today: "Aujourd'hui" }} />
+				</Scheduler>
+			</Container>
+		</>
 	);
 };
 
