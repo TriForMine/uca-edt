@@ -68,7 +68,10 @@ function stringToColor(str: string) {
 }
 
 function hourStringToHourMinutes(str?: string) {
-	const splitted = str?.split(" ");
+	const splitted = str?.toLowerCase()?.includes("h")
+		? str.toLowerCase()?.split("h")
+		: str?.split(" ");
+
 	return {
 		hours: splitted?.[0] ? parseInt(splitted[0]) : 0,
 		minutes: splitted?.[0] ? parseInt(splitted[1]) : 0,
@@ -170,13 +173,13 @@ const EDT: NextPage = (
 						cellDuration={60}
 						excludedDays={[0, 6]}
 						startDayHour={8}
-						endDayHour={18}
+						endDayHour={20}
 					/>
 				) : (
 					<DayView
 						cellDuration={60}
 						startDayHour={8}
-						endDayHour={18}
+						endDayHour={20}
 					/>
 				)}
 				<Appointments
