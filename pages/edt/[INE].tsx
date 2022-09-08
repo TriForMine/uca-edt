@@ -40,23 +40,6 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { EDT } from "../../src/types";
 
-const schedulerData = [
-	{
-		startDate: "2022-09-01T09:45",
-		endDate: "2022-09-01T11:00",
-		title: "TD Math Approfondissement",
-		color: "#ff00ff",
-		location: "M22",
-	},
-	{
-		startDate: "2022-09-01T12:00",
-		endDate: "2022-09-01T13:30",
-		title: "CM Math Approfondissement",
-		color: "#0ff000",
-		location: "Amphi M",
-	},
-];
-
 const calculateDayOffset = (day: EDT["edt"][0]["day"]) => {
 	switch (day) {
 		case "Lundi":
@@ -96,8 +79,10 @@ const EDT: NextPage = (
 	props: InferGetStaticPropsType<typeof getStaticProps>
 ) => {
 	const router = useRouter();
+	const theme = useTheme();
+	const showWeekView = useMediaQuery(theme.breakpoints.up("sm"));
 
-	const { data: edt, error } = useSWR<EDT>(
+	const { data: edt } = useSWR<EDT>(
 		router?.query?.INE ? `/edt/${router.query.INE}` : null,
 		{
 			fallbackData: props.data,
@@ -106,8 +91,6 @@ const EDT: NextPage = (
 
 	if (!edt) return <CircularProgress />;
 
-	const theme = useTheme();
-	const showWeekView = useMediaQuery(theme.breakpoints.up("sm"));
 	const schedulerData = edt.edt.map((course) => {
 		const startHour = hourStringToHourMinutes(
 			course.hour?.split("-")[0].trim()
@@ -124,7 +107,7 @@ const EDT: NextPage = (
 				2022,
 				8,
 				5 +
-					calculateDayOffset(course.day!) +
+					calculateDayOffset(course.day) +
 					(course.type != "CM" ? 7 : 0),
 				startHour.hours,
 				startHour.minutes
@@ -133,7 +116,7 @@ const EDT: NextPage = (
 				2022,
 				8,
 				5 +
-					calculateDayOffset(course.day!) +
+					calculateDayOffset(course.day) +
 					(course.type != "CM" ? 7 : 0),
 				endHour.hours,
 				endHour.minutes
