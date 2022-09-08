@@ -1,5 +1,10 @@
 import * as React from "react";
-import type { GetStaticProps, NextPage } from "next";
+import type {
+	GetStaticPaths,
+	GetStaticProps,
+	InferGetStaticPropsType,
+	NextPage,
+} from "next";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -20,11 +25,20 @@ import {
 	CustomAppointmentContent,
 } from "../../components/CustomAppointment";
 import { CustomTooltipContent } from "../../components/CustomAppointmentTooltip";
-import { Alert, Button, Stack, useMediaQuery } from "@mui/material";
+import {
+	Alert,
+	Button,
+	CircularProgress,
+	Stack,
+	useMediaQuery,
+} from "@mui/material";
 import Link from "next/link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useTheme } from "@mui/system";
 import axios from "axios";
+import { useRouter } from "next/router";
+import useSWR from "swr";
+import { EDT } from "../../src/types";
 
 const schedulerData = [
 	{
@@ -43,9 +57,90 @@ const schedulerData = [
 	},
 ];
 
-const Home: NextPage = () => {
+const calculateDayOffset = (day: EDT["edt"][0]["day"]) => {
+	switch (day) {
+		case "Lundi":
+			return 0;
+		case "Mardi":
+			return 1;
+		case "Mercredi":
+			return 2;
+		case "Jeudi":
+			return 3;
+		case "Vendredi":
+			return 4;
+		default:
+			return 0;
+	}
+};
+
+function stringToColor(str: string) {
+	let hash = 0;
+	for (let i = 0; i < str.length; i++) {
+		hash = str.charCodeAt(i) + ((hash << 3) - hash);
+	}
+	const color = Math.abs(hash).toString(16).substring(0, 6);
+
+	return "#" + "000000".substring(0, 6 - color.length) + color;
+}
+
+function hourStringToHourMinutes(str?: string) {
+	const splitted = str?.split(" ");
+	return {
+		hours: splitted?.[0] ? parseInt(splitted[0]) : 0,
+		minutes: splitted?.[0] ? parseInt(splitted[1]) : 0,
+	};
+}
+
+const EDT: NextPage = (
+	props: InferGetStaticPropsType<typeof getStaticProps>
+) => {
+	const router = useRouter();
+
+	const { data: edt, error } = useSWR<EDT>(
+		router?.query?.INE ? `/edt/${router.query.INE}` : null,
+		{
+			fallbackData: props.data,
+		}
+	);
+
+	if (!edt) return <CircularProgress />;
+
 	const theme = useTheme();
 	const showWeekView = useMediaQuery(theme.breakpoints.up("sm"));
+	const schedulerData = edt.edt.map((course) => {
+		const startHour = hourStringToHourMinutes(
+			course.hour?.split("-")[0].trim()
+		);
+		const endHour = hourStringToHourMinutes(
+			course.hour?.split("-")[1].trim()
+		);
+
+		return {
+			title: `${course.type} - ${course.name}`,
+			color: stringToColor(`${course.name}`),
+			location: course.salle,
+			startDate: new Date(
+				2022,
+				8,
+				5 +
+					calculateDayOffset(course.day!) +
+					(course.type != "CM" ? 7 : 0),
+				startHour.hours,
+				startHour.minutes
+			),
+			endDate: new Date(
+				2022,
+				8,
+				5 +
+					calculateDayOffset(course.day!) +
+					(course.type != "CM" ? 7 : 0),
+				endHour.hours,
+				endHour.minutes
+			),
+			rRule: "FREQ=WEEKLY;COUNT=12",
+		};
+	});
 
 	return (
 		<Container maxWidth="lg">
@@ -121,29 +216,31 @@ const Home: NextPage = () => {
 	);
 };
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
 	return {
 		paths: [],
-		fallback: true, // can also be true or 'blocking'
-	};
-}
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-	console.log(params);
-
-	// `getStaticProps` is executed on the server side.
-	const edt = await axios.get(
-		`https://api-uca-edt.triformine.dev/api/edt/${params?.INE}`
-	);
-	const path = `/edt/${params?.INE}`;
-
-	return {
-		props: {
-			fallback: {
-				path: edt,
-			},
-		},
+		fallback: "blocking", // can also be true or 'blocking'
 	};
 };
 
-export default Home;
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+	// `getStaticProps` is executed on the server side.
+	const edt = await axios
+		.get<EDT>(`https://api-uca-edt.triformine.dev/api/edt/${params?.INE}`)
+		.then((res) => res.data);
+
+	if (!edt) {
+		return {
+			notFound: true,
+		};
+	}
+
+	return {
+		props: {
+			edt,
+		},
+		revalidate: 360,
+	};
+};
+
+export default EDT;

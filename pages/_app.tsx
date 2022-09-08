@@ -10,12 +10,14 @@ import "../styles/auth_code.css";
 import { DefaultSeo } from "next-seo";
 import { SWRConfig } from "swr";
 import axios from "axios";
+import { api } from "../src/api";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
 interface MyAppProps extends AppProps {
 	emotionCache?: EmotionCache;
+	fallback?: { [p: string]: any };
 }
 
 export default function MyApp(props: MyAppProps) {
@@ -28,12 +30,7 @@ export default function MyApp(props: MyAppProps) {
 		<SWRConfig
 			value={{
 				refreshInterval: 3000,
-				fetcher: (url) =>
-					axios
-						.get(url, {
-							baseURL: "https://api-uca-edt.triformine.dev/api",
-						})
-						.then((res) => res.data),
+				fetcher: (url) => api.get(url).then((res) => res.data),
 			}}
 		>
 			<CacheProvider value={emotionCache}>
