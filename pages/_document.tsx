@@ -1,7 +1,6 @@
 import * as React from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import createEmotionServer from "@emotion/server/create-instance";
-import theme from "../src/theme";
 import createEmotionCache from "../src/createEmotionCache";
 
 export default class MyDocument extends Document {
@@ -11,22 +10,32 @@ export default class MyDocument extends Document {
 				<Head>
 					<meta name="application-name" content="EDT UCA" />
 					<meta name="apple-mobile-web-app-capable" content="yes" />
-					<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+					<meta
+						name="apple-mobile-web-app-status-bar-style"
+						content="default"
+					/>
 					<meta name="apple-mobile-web-app-title" content="EDT UCA" />
 					<meta name="mobile-web-app-capable" content="yes" />
 
 					<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-					<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-					<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+					<link
+						rel="icon"
+						type="image/png"
+						sizes="32x32"
+						href="/favicon-32x32.png"
+					/>
+					<link
+						rel="icon"
+						type="image/png"
+						sizes="16x16"
+						href="/favicon-16x16.png"
+					/>
 
 					<link rel="manifest" href="/manifest.webmanifest" />
 					<link rel="shortcut icon" href="/favicon.ico" />
 
-					<meta
-						name="theme-color"
-						content='#4B9CD3'
-					/>
+					<meta name="theme-color" content="#4B9CD3" />
 					<link rel="shortcut icon" href="/favicon.ico" />
 					<link
 						rel="stylesheet"
