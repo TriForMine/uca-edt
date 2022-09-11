@@ -5,7 +5,7 @@ const withPWA = require('next-pwa')({
 	dest: 'public'
 })
 const withPreact = require("next-plugin-preact");
-secu
+
 const ContentSecurityPolicy=`default-src 'self'; script-src 'unsafe-inline' 'unsafe-eval' 'report-sample' 'self'; style-src 'unsafe-inline' 'report-sample' 'self'; object-src 'none'; base-uri 'self'; connect-src https://api-uca-edt.triformine.dev 'self'; font-src 'self' https://fonts.gstatic.com; frame-src 'self'; img-src 'self'; manifest-src 'self'; media-src 'self'; worker-src 'self';`;
 
 const securityHeaders = [
