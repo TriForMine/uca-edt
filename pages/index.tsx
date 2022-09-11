@@ -56,8 +56,8 @@ const Home: NextPage = () => {
 					</Stack>
 					{query?.invalid === "true" ? (
 						<Alert variant="outlined" severity="error">
-							Le numéro étudiant rentrer n&apos;existe pas dans notre
-							base de données.
+							Le numéro étudiant rentrer n&apos;existe pas dans
+							notre base de données.
 						</Alert>
 					) : (
 						""
