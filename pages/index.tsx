@@ -3,14 +3,23 @@ import type { NextPage } from "next";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { Button, IconButton, Stack, Tooltip, useTheme } from "@mui/material";
+import {
+	Alert,
+	Button,
+	IconButton,
+	Stack,
+	Tooltip,
+	useTheme,
+} from "@mui/material";
 import Link from "next/link";
 import { useState } from "react";
 import AuthCode from "react-auth-code-input";
 import InfoIcon from "@mui/icons-material/Info";
 import { NextSeo } from "next-seo";
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
+	const { query } = useRouter();
 	const theme = useTheme();
 	const [INE, setINE] = useState<number | undefined>();
 
@@ -45,6 +54,14 @@ const Home: NextPage = () => {
 							</IconButton>
 						</Tooltip>
 					</Stack>
+					{query?.invalid === "true" ? (
+						<Alert variant="outlined" severity="error">
+							Le numéro étudiant rentrer n&apos;existe pas dans notre
+							base de données.
+						</Alert>
+					) : (
+						""
+					)}
 					<AuthCode
 						containerClassName={`auth-container auth-container-${theme.palette.mode}`}
 						length={8}
