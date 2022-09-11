@@ -9,10 +9,23 @@ export default class MyDocument extends Document {
 		return (
 			<Html lang="fr">
 				<Head>
-					{/* PWA primary color */}
+					<meta name="application-name" content="EDT UCA" />
+					<meta name="apple-mobile-web-app-capable" content="yes" />
+					<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+					<meta name="apple-mobile-web-app-title" content="EDT UCA" />
+					<meta name="mobile-web-app-capable" content="yes" />
+
+					<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+					<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+					<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+					<link rel="manifest" href="/manifest.webmanifest" />
+					<link rel="shortcut icon" href="/favicon.ico" />
+
 					<meta
 						name="theme-color"
-						content={theme.palette.primary.main}
+						content='#4B9CD3'
 					/>
 					<link rel="shortcut icon" href="/favicon.ico" />
 					<link
