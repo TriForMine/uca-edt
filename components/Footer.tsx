@@ -8,7 +8,7 @@ export default function Footer() {
     return (
         <Paper
             sx={{
-                py: 3,
+                py: 2,
                 px: 2,
                 mt: 'auto',
             }}
