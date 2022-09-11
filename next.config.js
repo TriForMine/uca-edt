@@ -1,10 +1,10 @@
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
-	enabled: process.env.ANALYZE === "true"
-});
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+	enabled: process.env.ANALYZE === 'true',
+})
 
-const withPreact = require("next-plugin-preact");
+const withPreact = require('next-plugin-preact')
 
-const ContentSecurityPolicy=`default-src 'self'; script-src 'unsafe-inline' 'unsafe-eval' 'report-sample' 'self'; style-src 'unsafe-inline' 'report-sample' 'self'; object-src 'none'; base-uri 'self'; connect-src https://api-uca-edt.triformine.dev 'self'; font-src 'self' https://fonts.gstatic.com; frame-src 'self'; img-src 'self'; manifest-src 'self'; media-src 'self'; worker-src 'self';`;
+const ContentSecurityPolicy = `default-src 'self'; script-src 'unsafe-inline' 'unsafe-eval' 'report-sample' 'self'; style-src 'unsafe-inline' 'report-sample' 'self'; object-src 'none'; base-uri 'self'; connect-src https://api-uca-edt.triformine.dev 'self'; font-src 'self' https://fonts.gstatic.com; frame-src 'self'; img-src 'self'; manifest-src 'self'; media-src 'self'; worker-src 'self';`
 
 const securityHeaders = [
 	{
@@ -42,19 +42,19 @@ const nextConfig = withPreact(
 	withBundleAnalyzer({
 		reactStrictMode: true,
 		swcMinify: true,
-		output: "standalone",
+		output: 'standalone',
 		experimental: {
-			esmExternals: false
+			esmExternals: false,
 		},
 		async headers() {
 			return [
 				{
 					source: '/:path*',
-					headers: securityHeaders
-				}
+					headers: securityHeaders,
+				},
 			]
-		}
+		},
 	})
-);
+)
 
-module.exports = nextConfig;
+module.exports = nextConfig
