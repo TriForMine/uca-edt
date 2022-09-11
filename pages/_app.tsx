@@ -38,7 +38,7 @@ export default function MyApp(props: MyAppProps) {
 					openGraph={{
 						type: "website",
 						locale: "fr_FR",
-						url: "https://www.url.ie/",
+						url: "https://uca-edt.triformine.dev/",
 						site_name: "EDT UCA",
 					}}
 				/>

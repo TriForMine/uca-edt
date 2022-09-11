@@ -110,28 +110,32 @@ const EDT: NextPage = (
 					.trim()
 			);
 
+			const startDate = new Date(
+				2022,
+				8,
+				5 +
+					calculateDayOffset(course.day) +
+					(course.type != "CM" ? 7 : 0),
+				startHour.hours,
+				startHour.minutes
+			);
+
+			const endDate = new Date(
+				2022,
+				8,
+				5 +
+					calculateDayOffset(course.day) +
+					(course.type != "CM" ? 7 : 0),
+				endHour.hours,
+				endHour.minutes
+			);
+
 			return {
 				title: `${course.type} - ${course.name}`,
 				color: stringToColor(`${course.name}`),
 				location: course.salle,
-				startDate: new Date(
-					2022,
-					8,
-					5 +
-						calculateDayOffset(course.day) +
-						(course.type != "CM" ? 7 : 0),
-					startHour.hours,
-					startHour.minutes
-				),
-				endDate: new Date(
-					2022,
-					8,
-					5 +
-						calculateDayOffset(course.day) +
-						(course.type != "CM" ? 7 : 0),
-					endHour.hours,
-					endHour.minutes
-				),
+				startDate,
+				endDate,
 				rRule: "FREQ=WEEKLY;COUNT=12",
 			};
 		});
