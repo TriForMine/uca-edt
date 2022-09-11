@@ -60,7 +60,7 @@ const Home: NextPage = () => {
             />
             <Link
                 href={`/edt/${INE}`}
-                prefetch={INE !== undefined && INE.length === 8}
+                prefetch={INE !== undefined && INE.toString().length === 8}
                 passHref
             >
                 <Button
