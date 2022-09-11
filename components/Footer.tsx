@@ -8,10 +8,9 @@ export default function Footer() {
 	return (
 		<Paper
 			sx={{
-				marginTop: "calc(10% + 60px)",
-				position: "fixed",
-				bottom: 0,
-				width: "100%",
+				py: 3,
+				px: 2,
+				mt: "auto",
 			}}
 			component="footer"
 			square
@@ -22,7 +21,8 @@ export default function Footer() {
 						flexGrow: 1,
 						justifyContent: "center",
 						display: "flex",
-						my: 2,
+						py: 2,
+						mb: 0,
 					}}
 				>
 					<Typography variant="caption">

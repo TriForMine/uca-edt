@@ -11,6 +11,8 @@ import { DefaultSeo } from "next-seo";
 import { SWRConfig } from "swr";
 import { api } from "../src/api";
 import Footer from "../components/Footer";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -49,10 +51,31 @@ export default function MyApp(props: MyAppProps) {
 					/>
 				</Head>
 				<ThemeProvider theme={theme}>
-					{/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-					<CssBaseline />
-					<Component {...pageProps} />
-					<Footer />
+					<Box
+						sx={{
+							display: "flex",
+							flexDirection: "column",
+							minHeight: "100vh",
+						}}
+					>
+						<CssBaseline />
+						<Container maxWidth="lg">
+							<Box
+								sx={{
+									py: 3,
+									px: 2,
+									mt: "auto",
+									display: "flex",
+									flexDirection: "column",
+									justifyContent: "center",
+									alignItems: "center",
+								}}
+							>
+								<Component {...pageProps} />
+							</Box>
+						</Container>
+						<Footer />
+					</Box>
 				</ThemeProvider>
 			</CacheProvider>
 		</SWRConfig>

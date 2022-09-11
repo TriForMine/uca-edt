@@ -26,62 +26,50 @@ const Home: NextPage = () => {
 	return (
 		<>
 			<NextSeo title="Connexion" />
-			<Container>
-				<Box
-					sx={{
-						my: 4,
-						display: "flex",
-						flexDirection: "column",
-						justifyContent: "center",
-						alignItems: "center",
-					}}
+			<Stack direction="row">
+				<Typography
+					variant="h4"
+					component="h1"
+					gutterBottom
+					textAlign="center"
 				>
-					<Stack direction="row">
-						<Typography
-							variant="h4"
-							component="h1"
-							gutterBottom
-							textAlign="center"
-						>
-							Veuillez rentrer votre numéro étudiant (INE)
-						</Typography>
-						<Tooltip
-							title="Vous pouvez le retrouver sur votre carte étudiante."
-							sx={{ marginBottom: "0.35em" }}
-						>
-							<IconButton>
-								<InfoIcon color="info" />
-							</IconButton>
-						</Tooltip>
-					</Stack>
-					{query?.invalid === "true" ? (
-						<Alert variant="outlined" severity="error">
-							Le numéro étudiant rentrer n&apos;existe pas dans
-							notre base de données.
-						</Alert>
-					) : (
-						""
-					)}
-					<AuthCode
-						containerClassName={`auth-container auth-container-${theme.palette.mode}`}
-						length={8}
-						allowedCharacters="numeric"
-						onChange={(res) => setINE(parseInt(res))}
-					/>
-					<Link
-						href={`/edt/${INE}`}
-						prefetch={INE !== undefined}
-						passHref
-					>
-						<Button
-							variant="contained"
-							disabled={INE?.toString().length !== 8}
-						>
-							Confirmer
-						</Button>
-					</Link>
-				</Box>
-			</Container>
+					Veuillez rentrer votre numéro étudiant (INE)
+				</Typography>
+				<Tooltip
+					title="Vous pouvez le retrouver sur votre carte étudiante."
+					sx={{ marginBottom: "0.35em" }}
+				>
+					<IconButton>
+						<InfoIcon color="info" />
+					</IconButton>
+				</Tooltip>
+			</Stack>
+			{query?.invalid === "true" ? (
+				<Alert variant="outlined" severity="error">
+					Le numéro étudiant rentrer n&apos;existe pas dans
+					notre base de données.
+				</Alert>
+			) : (
+				""
+			)}
+			<AuthCode
+				containerClassName={`auth-container auth-container-${theme.palette.mode}`}
+				length={8}
+				allowedCharacters="numeric"
+				onChange={(res) => setINE(parseInt(res))}
+			/>
+			<Link
+				href={`/edt/${INE}`}
+				prefetch={INE !== undefined}
+				passHref
+			>
+				<Button
+					variant="contained"
+					disabled={INE?.toString().length !== 8}
+				>
+					Confirmer
+				</Button>
+			</Link>
 		</>
 	);
 };

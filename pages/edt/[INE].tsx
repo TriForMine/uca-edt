@@ -5,9 +5,7 @@ import type {
 	InferGetStaticPropsType,
 	NextPage,
 } from "next";
-import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 import {
 	Alert,
 	Button,
@@ -143,47 +141,31 @@ const EDT: NextPage = (
 	return (
 		<>
 			<NextSeo title="Votre Emploi Du Temps" />
-			<Container maxWidth="lg">
-				<Box
-					sx={{
-						my: 4,
-						display: "flex",
-						flexDirection: "column",
-						justifyContent: "center",
-						alignItems: "center",
-					}}
-				>
-					<Stack
-						sx={{ width: "100%" }}
-						direction="row"
-						justifyContent="left"
-					>
-						<Link href="/" passHref>
-							<Button startIcon={<ArrowBackIcon />} color="error">
-								Changer d&apos;étudiant
-							</Button>
-						</Link>
-					</Stack>
+			<Stack sx={{ width: "100%" }} direction="row" justifyContent="left">
+				<Link href="/" passHref>
+					<Button startIcon={<ArrowBackIcon />} color="error">
+						Changer d&apos;étudiant
+					</Button>
+				</Link>
+			</Stack>
 
-					<Typography variant="h4" component="h1" gutterBottom>
-						Votre emploi du temps
-					</Typography>
+			<Typography variant="h4" component="h1" gutterBottom>
+				Votre emploi du temps
+			</Typography>
 
-					<Alert variant="outlined" severity="warning">
-						L&apos;emploi du temps est généré automatiquement, est
-						peut contenir des erreurs.
-						<br />
-						Veuillez vous référer à votre emploi du temps officiel,
-						ou aux dernières informations reçues.
-					</Alert>
-				</Box>
-				<Suspense fallback={<CircularProgress />}>
-					<EDTTable
-						schedulerData={schedulerData}
-						showWeekView={showWeekView}
-					/>
-				</Suspense>
-			</Container>
+			<Alert variant="outlined" severity="warning">
+				L&apos;emploi du temps est généré automatiquement, et peut
+				contenir des erreurs.
+				<br />
+				Veuillez vous référer à votre emploi du temps officiel, ou aux
+				dernières informations reçues.
+			</Alert>
+			<Suspense fallback={<CircularProgress />}>
+				<EDTTable
+					schedulerData={schedulerData}
+					showWeekView={showWeekView}
+				/>
+			</Suspense>
 		</>
 	);
 };
