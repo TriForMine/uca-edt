@@ -8,23 +8,6 @@ import type {
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { ViewState } from "@devexpress/dx-react-scheduler";
-import {
-	Scheduler,
-	WeekView,
-	DayView,
-	Appointments,
-	CurrentTimeIndicator,
-	DateNavigator,
-	Toolbar,
-	TodayButton,
-	AppointmentTooltip,
-} from "@devexpress/dx-react-scheduler-material-ui";
-import {
-	CustomAppointment,
-	CustomAppointmentContent,
-} from "../../components/CustomAppointment";
-import { CustomTooltipContent } from "../../components/CustomAppointmentTooltip";
 import {
 	Alert,
 	Button,
@@ -40,6 +23,10 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { EDT } from "../../src/types";
 import { NextSeo } from "next-seo";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
+
+const EDTTable = dynamic(() => import("../../components/EDT"));
 
 const calculateDayOffset = (day: EDT["edt"][0]["day"]) => {
 	switch (day) {
@@ -186,41 +173,12 @@ const EDT: NextPage = (
 						ou aux dernières informations reçues.
 					</Alert>
 				</Box>
-				{/*
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore */}
-				<Scheduler locale="fr-fr" data={schedulerData}>
-					<ViewState />
-					{showWeekView ? (
-						<WeekView
-							cellDuration={60}
-							excludedDays={[0, 6]}
-							startDayHour={8}
-							endDayHour={20}
-						/>
-					) : (
-						<DayView
-							cellDuration={60}
-							startDayHour={8}
-							endDayHour={20}
-						/>
-					)}
-					<Appointments
-						appointmentContentComponent={CustomAppointmentContent}
-						appointmentComponent={CustomAppointment}
+				<Suspense fallback={<CircularProgress />}>
+					<EDTTable
+						schedulerData={schedulerData}
+						showWeekView={showWeekView}
 					/>
-					<AppointmentTooltip
-						contentComponent={CustomTooltipContent}
-						showCloseButton
-					/>
-					<CurrentTimeIndicator
-						shadePreviousAppointments
-						shadePreviousCells
-					/>
-					<Toolbar />
-					<DateNavigator />
-					<TodayButton messages={{ today: "Aujourd'hui" }} />
-				</Scheduler>
+				</Suspense>
 			</Container>
 		</>
 	);
@@ -234,23 +192,39 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-	// `getStaticProps` is executed on the server side.
-	const edt = await axios
-		.get<EDT>(`https://api-uca-edt.triformine.dev/api/edt/${params?.INE}`)
-		.then((res) => res.data);
+	try {
+		// `getStaticProps` is executed on the server side.
+		const edt = await axios
+			.get<EDT>(
+				`https://api-uca-edt.triformine.dev/api/edt/${params?.INE}`
+			)
+			.then((res) => res.data);
 
-	if (!edt) {
+		if (!edt) {
+			return {
+				redirect: {
+					destination: "/?invalid=true",
+					permanent: false,
+					// statusCode: 301
+				},
+			};
+		}
+
 		return {
-			notFound: true,
+			props: {
+				edt,
+			},
+			revalidate: 360,
+		};
+	} catch (e) {
+		return {
+			redirect: {
+				destination: "/?invalid=true",
+				permanent: false,
+				// statusCode: 301
+			},
 		};
 	}
-
-	return {
-		props: {
-			edt,
-		},
-		revalidate: 360,
-	};
 };
 
 export default EDT;

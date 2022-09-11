@@ -51,7 +51,11 @@ const Home: NextPage = () => {
 						allowedCharacters="numeric"
 						onChange={(res) => setINE(parseInt(res))}
 					/>
-					<Link href={`/edt/${INE}`} passHref>
+					<Link
+						href={`/edt/${INE}`}
+						prefetch={INE !== undefined}
+						passHref
+					>
 						<Button
 							variant="contained"
 							disabled={INE?.toString().length !== 8}
