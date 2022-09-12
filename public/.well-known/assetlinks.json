@@ -1,0 +1,10 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "dev.triformine.uca_edt.twa",
+    "sha256_cert_fingerprints": [
+      "E6:46:C8:30:76:35:4F:5D:C0:23:0A:53:1A:9F:ED:DD:97:00:0F:91:39:97:7F:87:54:7A:54:53:6F:1C:EB:CC"
+    ]
+  }
+}]
