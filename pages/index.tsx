@@ -1,8 +1,6 @@
 import * as React from 'react'
 import type { NextPage } from 'next'
-import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
 import {
     Alert,
     Button,
@@ -11,12 +9,13 @@ import {
     Tooltip,
     useTheme,
 } from '@mui/material'
-import Link from 'next/link'
+import Link from '@mui/material/Link'
 import { useState } from 'react'
 import AuthCode from 'react-auth-code-input'
 import InfoIcon from '@mui/icons-material/Info'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
+import NextLink from 'next/link'
 
 const Home: NextPage = () => {
     const { query } = useRouter()
@@ -29,10 +28,33 @@ const Home: NextPage = () => {
                 title="Connexion"
                 canonical="https://uca-edt.triformine.dev/"
             />
-            <Stack direction="row">
+            <Typography
+                variant="h3"
+                component="h1"
+                gutterBottom
+                textAlign="center"
+            >
+                Emploi du Temps - UCA
+            </Typography>
+            <Typography variant="subtitle1" textAlign="center" gutterBottom>
+                Un site pour consulter votre emploi du temps. <br /> Créé par{' '}
+                <NextLink href="https://github.com/triformine" passHref>
+                    <Link target="_blank" underline="none">
+                        TriForMine
+                    </Link>
+                </NextLink>{' '}
+                et{' '}
+                <NextLink href="https://github.com/corentings" passHref>
+                    <Link target="_blank" underline="none">
+                        CorentinGS
+                    </Link>
+                </NextLink>
+                .
+            </Typography>
+            <Stack sx={{ mt: 5 }} direction="row">
                 <Typography
                     variant="h4"
-                    component="h1"
+                    component="h2"
                     gutterBottom
                     textAlign="center"
                 >
@@ -61,7 +83,7 @@ const Home: NextPage = () => {
                 allowedCharacters="numeric"
                 onChange={(res) => setINE(parseInt(res))}
             />
-            <Link
+            <NextLink
                 href={`/edt/${INE}`}
                 prefetch={INE !== undefined && INE.toString().length === 8}
                 passHref
@@ -72,7 +94,7 @@ const Home: NextPage = () => {
                 >
                     Confirmer
                 </Button>
-            </Link>
+            </NextLink>
         </>
     )
 }
