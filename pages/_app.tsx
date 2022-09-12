@@ -37,6 +37,7 @@ export default function MyApp(props: MyAppProps) {
             <CacheProvider value={emotionCache}>
                 <DefaultSeo
                     titleTemplate="%s | EDT UCA"
+                    description="Ce site est fait par des étudiants pour les étudiants du Campus Valrose. Il permet d'obtenir votre emploi du temps, en fournissant votre numéro étudiant."
                     openGraph={{
                         type: 'website',
                         locale: 'fr_FR',

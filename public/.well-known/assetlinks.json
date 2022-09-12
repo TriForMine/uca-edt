@@ -4,7 +4,8 @@
     "namespace": "android_app",
     "package_name": "dev.triformine.uca_edt.twa",
     "sha256_cert_fingerprints": [
-      "E6:46:C8:30:76:35:4F:5D:C0:23:0A:53:1A:9F:ED:DD:97:00:0F:91:39:97:7F:87:54:7A:54:53:6F:1C:EB:CC"
+      "E6:46:C8:30:76:35:4F:5D:C0:23:0A:53:1A:9F:ED:DD:97:00:0F:91:39:97:7F:87:54:7A:54:53:6F:1C:EB:CC",
+      "B3:94:23:2F:3E:27:CC:33:77:41:CC:B8:70:C5:D3:07:76:64:FE:82:FA:38:CA:8D:FA:0F:2F:B1:17:CC:02:9A"
     ]
   }
 }]

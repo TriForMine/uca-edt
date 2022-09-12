@@ -140,7 +140,10 @@ const EDT: NextPage = (
 
     return (
         <>
-            <NextSeo title="Votre Emploi Du Temps" />
+            <NextSeo
+                title="Votre Emploi Du Temps"
+                canonical={`https://uca-edt.triformine.dev/edt/${router?.query?.INE}`}
+            />
             <Stack sx={{ width: '100%' }} direction="row" justifyContent="left">
                 <Link href="/" passHref>
                     <Button startIcon={<ArrowBackIcon />} color="error">

@@ -25,7 +25,10 @@ const Home: NextPage = () => {
 
     return (
         <>
-            <NextSeo title="Connexion" />
+            <NextSeo
+                title="Connexion"
+                canonical="https://uca-edt.triformine.dev/"
+            />
             <Stack direction="row">
                 <Typography
                     variant="h4"
