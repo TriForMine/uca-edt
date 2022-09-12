@@ -15,6 +15,7 @@ import {
 } from '@mui/material'
 import Link from 'next/link'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import GetAppIcon from '@mui/icons-material/GetApp'
 import { useTheme } from '@mui/system'
 import axios from 'axios'
 import { useRouter } from 'next/router'
@@ -23,6 +24,7 @@ import { EDT } from '../../src/types'
 import { NextSeo } from 'next-seo'
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
+import { ICalendar } from 'datebook'
 
 const EDTTable = dynamic(() => import('../../components/EDT'))
 
@@ -80,6 +82,8 @@ const EDT: NextPage = (
 
     if (!edt) return <CircularProgress />
 
+    let icalendar: ICalendar
+
     const schedulerData = edt.edt
         .filter((course) => {
             return !(
@@ -128,6 +132,23 @@ const EDT: NextPage = (
                 endHour.minutes
             )
 
+            let newCalendar = new ICalendar({
+                title: `${course.type} - ${course.name}`,
+                location: course.salle,
+                start: startDate,
+                end: endDate,
+                recurrence: {
+                    frequency: 'WEEKLY',
+                    count: 12,
+                },
+            })
+
+            if (!icalendar) {
+                icalendar = newCalendar
+            } else {
+                icalendar.addEvent(newCalendar)
+            }
+
             return {
                 title: `${course.type} - ${course.name}`,
                 color: stringToColor(`${course.name}`),
@@ -163,6 +184,24 @@ const EDT: NextPage = (
                 Veuillez vous référer à votre emploi du temps officiel, ou aux
                 dernières informations reçues.
             </Alert>
+
+            <Stack
+                sx={{ width: '100%', my: 3 }}
+                direction="row"
+                justifyContent="center"
+            >
+                <Button
+                    variant="outlined"
+                    color="success"
+                    startIcon={<GetAppIcon />}
+                    onClick={() =>
+                        icalendar.download(`edt-${router.query.INE}.ics`)
+                    }
+                >
+                    Télécharger le Calendrier (iCalendar)
+                </Button>
+            </Stack>
+
             <Suspense fallback={<CircularProgress />}>
                 <EDTTable
                     schedulerData={schedulerData}

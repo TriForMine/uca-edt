@@ -10,9 +10,11 @@ import '../styles/auth_code.css'
 import { DefaultSeo } from 'next-seo'
 import { SWRConfig } from 'swr'
 import { api } from '../src/api'
-import Footer from '../components/Footer'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
+import dynamic from 'next/dynamic'
+
+const Footer = dynamic(() => import('../components/Footer'))
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
