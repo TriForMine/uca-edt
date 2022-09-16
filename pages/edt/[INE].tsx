@@ -25,6 +25,7 @@ import { NextSeo } from 'next-seo'
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
 import { ICalendar } from 'datebook'
+import { deleteCookie } from 'cookies-next'
 
 const EDTTable = dynamic(() => import('../../components/EDT'))
 
@@ -167,7 +168,13 @@ const EDT: NextPage = (
             />
             <Stack sx={{ width: '100%' }} direction="row" justifyContent="left">
                 <Link href="/" passHref>
-                    <Button startIcon={<ArrowBackIcon />} color="error">
+                    <Button
+                        onClick={() => {
+                            deleteCookie('ine')
+                        }}
+                        startIcon={<ArrowBackIcon />}
+                        color="error"
+                    >
                         Changer d&apos;étudiant
                     </Button>
                 </Link>

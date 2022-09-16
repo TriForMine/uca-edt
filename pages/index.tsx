@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { NextPage } from 'next'
+import type { GetServerSideProps, NextPage } from 'next'
 import Typography from '@mui/material/Typography'
 import {
     Alert,
@@ -16,6 +16,7 @@ import InfoIcon from '@mui/icons-material/Info'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import NextLink from 'next/link'
+import { getCookie, setCookie } from 'cookies-next'
 
 const Home: NextPage = () => {
     const { query } = useRouter()
@@ -90,6 +91,9 @@ const Home: NextPage = () => {
             >
                 <Button
                     variant="contained"
+                    onClick={() => {
+                        setCookie('ine', INE?.toString())
+                    }}
                     disabled={INE?.toString().length !== 8}
                 >
                     Confirmer
@@ -97,6 +101,23 @@ const Home: NextPage = () => {
             </NextLink>
         </>
     )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+    const INE = getCookie('ine', { req, res })
+
+    if (INE) {
+        return {
+            redirect: {
+                destination: `/edt/${INE}`,
+                permanent: false,
+            },
+        }
+    } else {
+        return {
+            props: {},
+        }
+    }
 }
 
 export default Home
