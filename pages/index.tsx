@@ -93,7 +93,7 @@ const Home: NextPage = () => {
                     variant="contained"
                     onClick={() => {
                         setCookie('ine', INE?.toString(), {
-                            maxAge: 30 * 24 * 60 * 60 * 1000
+                            maxAge: 30 * 24 * 60 * 60 * 1000,
                         })
                     }}
                     disabled={INE?.toString().length !== 8}
