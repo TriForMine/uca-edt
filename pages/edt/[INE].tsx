@@ -140,7 +140,7 @@ const EDT: NextPage = (
                 end: endDate,
                 recurrence: {
                     frequency: 'WEEKLY',
-                    count: 12,
+                    count: 14,
                 },
             })
 
@@ -156,7 +156,7 @@ const EDT: NextPage = (
                 location: course.salle,
                 startDate,
                 endDate,
-                rRule: 'FREQ=WEEKLY;COUNT=12',
+                rRule: 'FREQ=WEEKLY;COUNT=14',
             }
         })
 
