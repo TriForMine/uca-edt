@@ -12,10 +12,10 @@
     "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build"
   },
   "dependencies": {
-    "@devexpress/dx-react-core": "4.0.0",
-    "@devexpress/dx-react-scheduler": "4.0.0",
-    "@devexpress/dx-react-scheduler-material-ui": "4.0.0",
-    "@devexpress/dx-scheduler-core": "4.0.0",
+    "@devexpress/dx-react-core": "3.0.6",
+    "@devexpress/dx-react-scheduler": "3.0.6",
+    "@devexpress/dx-react-scheduler-material-ui": "3.0.6",
+    "@devexpress/dx-scheduler-core": "3.0.6",
     "@emotion/cache": "latest",
     "@emotion/react": "latest",
     "@emotion/server": "latest",
