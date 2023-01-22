@@ -114,9 +114,9 @@ const EDT: NextPage = (
             )
 
             const startDate = new Date(
-                2022,
-                8,
-                5 +
+                2023,
+                1,
+                16 +
                     calculateDayOffset(course.day) +
                     (course.type != 'CM' ? 7 : 0),
                 startHour.hours,
@@ -124,9 +124,9 @@ const EDT: NextPage = (
             )
 
             const endDate = new Date(
-                2022,
-                8,
-                5 +
+                2023,
+                1,
+                16 +
                     calculateDayOffset(course.day) +
                     (course.type != 'CM' ? 7 : 0),
                 endHour.hours,
