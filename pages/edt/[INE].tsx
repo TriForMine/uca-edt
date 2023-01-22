@@ -115,7 +115,7 @@ const EDT: NextPage = (
 
             const startDate = new Date(
                 2023,
-                1,
+                0,
                 16 +
                     calculateDayOffset(course.day) +
                     (course.type != 'CM' ? 7 : 0),
@@ -125,7 +125,7 @@ const EDT: NextPage = (
 
             const endDate = new Date(
                 2023,
-                1,
+                0,
                 16 +
                     calculateDayOffset(course.day) +
                     (course.type != 'CM' ? 7 : 0),
