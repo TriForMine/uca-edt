@@ -119,7 +119,7 @@ const EDT: NextPage = (
                 16 +
                     calculateDayOffset(course.day) +
                     (course.type != 'CM' ? 7 : 0) +
-                    (course.name === "Systèmes 2 (S2) - TP" ? 14 : 0),
+                    (course.name === 'Systèmes 2 (S2) - TP' ? 14 : 0),
                 startHour.hours,
                 startHour.minutes
             )
@@ -130,7 +130,7 @@ const EDT: NextPage = (
                 16 +
                     calculateDayOffset(course.day) +
                     (course.type != 'CM' ? 7 : 0)  +
-                    (course.name === "Systèmes 2 (S2) - TP" ? 14 : 0),
+                    (course.name === 'Systèmes 2 (S2) - TP' ? 14 : 0),
                 endHour.hours,
                 endHour.minutes
             )
