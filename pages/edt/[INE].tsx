@@ -113,14 +113,23 @@ const EDT: NextPage = (
                     .trim()
             )
 
+            console.log(course)
+
             const startDate = new Date(
                 2023,
                 0,
                 16 +
                     calculateDayOffset(course.day) +
-                    (course.type != 'CM' ? 7 : 0) +
+                    (course.type != 'CM' &&
+                    course.name !==
+                        "Concepts d'Intelligence artificifielle  (CIA)"
+                        ? 7
+                        : 0) +
                     (course.name === 'ANGLAIS' ? 14 : 0) +
-                    (course.name === 'Concepts d\'Intelligence artificifielle (CIA)' ? 79 : 0) +
+                    (course.name ===
+                    "Concepts d'Intelligence artificifielle  (CIA)"
+                        ? 77
+                        : 0) +
                     (course.name === 'Systèmes 2 (S2) - TP' ? 14 : 0),
                 startHour.hours,
                 startHour.minutes
@@ -131,8 +140,15 @@ const EDT: NextPage = (
                 0,
                 16 +
                     calculateDayOffset(course.day) +
-                    (course.type != 'CM' ? 7 : 0) +
-                    (course.name === 'Concepts d\'Intelligence artificifielle (CIA)' ? 79 : 0) +
+                    (course.type != 'CM' &&
+                    course.name !==
+                        "Concepts d'Intelligence artificifielle  (CIA)"
+                        ? 7
+                        : 0) +
+                    (course.name ===
+                    "Concepts d'Intelligence artificifielle  (CIA)"
+                        ? 77
+                        : 0) +
                     (course.name === 'ANGLAIS' ? 14 : 0) +
                     (course.name === 'Systèmes 2 (S2) - TP' ? 14 : 0),
                 endHour.hours,
