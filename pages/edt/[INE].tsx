@@ -113,8 +113,6 @@ const EDT: NextPage = (
                     .trim()
             )
 
-            console.log(course)
-
             const startDate = new Date(
                 2023,
                 0,
@@ -174,7 +172,7 @@ const EDT: NextPage = (
 
             return {
                 title: `${course.type} - ${course.name}`,
-                color: stringToColor(`${course.name}`),
+                color: stringToColor(`${course.name?.replaceAll(' - TP', '')}`),
                 location: course.salle,
                 startDate,
                 endDate,

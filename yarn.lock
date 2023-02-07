@@ -1009,6 +1009,14 @@
     moment "^2.24.0"
     rrule "2.6.4"
 
+"@devexpress/dx-scheduler-core@^4.0.3":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@devexpress/dx-scheduler-core/-/dx-scheduler-core-4.0.3.tgz#49ac6780007d3db4e1673bc8c0c87ddb0c3e7de2"
+  integrity sha512-RpMStEwIRTjs6qfKDg0lkZ6tahrhDxNl1NpYBkMTfxDRknT2p+VJd9UlmhQ/e2g6FbYBeY3RZFNxF3OVJ9tO5A==
+  dependencies:
+    moment "^2.24.0"
+    rrule "2.7.1"
+
 "@emotion/babel-plugin@^11.10.0":
   version "11.10.2"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.10.2.tgz#879db80ba622b3f6076917a1e6f648b1c7d008c7"
@@ -4099,6 +4107,13 @@ rrule@2.6.4:
     tslib "^1.10.0"
   optionalDependencies:
     luxon "^1.21.3"
+
+rrule@2.7.1:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/rrule/-/rrule-2.7.1.tgz#2511e1aed0e96fb5acf831304cde97d2cb65d99e"
+  integrity sha512-4p20u/1U7WqR3Nb1hOUrm0u1nSI7sO93ZUVZEZ5HeF6Gr5OlJuyhwEGRvUHq8ZfrPsq5gfa5b9dqnUs/kPqpIw==
+  dependencies:
+    tslib "^2.4.0"
 
 run-parallel@^1.1.9:
   version "1.2.0"

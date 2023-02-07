@@ -15,7 +15,7 @@
     "@devexpress/dx-react-core": "3.0.6",
     "@devexpress/dx-react-scheduler": "3.0.6",
     "@devexpress/dx-react-scheduler-material-ui": "3.0.6",
-    "@devexpress/dx-scheduler-core": "3.0.6",
+    "@devexpress/dx-scheduler-core": "^4.0.3",
     "@emotion/cache": "latest",
     "@emotion/react": "latest",
     "@emotion/server": "latest",
