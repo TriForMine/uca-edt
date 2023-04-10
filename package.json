@@ -33,7 +33,7 @@
     "next-seo": "5.15.0",
     "node-xlsx": "0.21.0",
     "preact": "10.13.2",
-    "preact-render-to-string": "5.2.6",
+    "preact-render-to-string": "6.0.2",
     "react": "npm:@preact/compat@latest",
     "react-auth-code-input": "3.2.1",
     "react-dom": "npm:@preact/compat@latest",
