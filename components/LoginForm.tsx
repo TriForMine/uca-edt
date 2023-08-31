@@ -6,13 +6,15 @@ import NextLink from 'next/link'
 import * as React from 'react'
 import { setCookie } from 'cookies-next'
 
-export function INEForm() {
+export function INEForm({ error = false }: { error: boolean }) {
     const [INE, setINE] = useState<number | undefined>()
 
     return (
         <div className="flex flex-col items-center justify-center">
             <AuthCode
-                containerClassName={`auth-container`}
+                containerClassName={`auth-container ${
+                    error ? 'auth-container-error' : ''
+                }`}
                 length={8}
                 allowedCharacters="numeric"
                 onChange={(res) => setINE(parseInt(res))}

@@ -5,6 +5,9 @@ import dynamic_import from 'next/dynamic'
 import { DownloadCalendar } from '../../../components/DownloadCalendar'
 import { LogoutButton } from '../../../components/LogoutButton'
 import type { Appointment } from 'devextreme/ui/scheduler/'
+import { deleteCookie } from 'cookies-next'
+import { redirect } from 'next/navigation'
+import { Metadata, ResolvingMetadata } from 'next'
 
 const EDTTable = dynamic_import(() => import('../../../components/EDT'), {
     ssr: true,
@@ -49,7 +52,7 @@ function hourStringToHourMinutes(str?: string) {
     }
 }
 
-async function getCalendar(INE: string): Promise<EDT> {
+async function getCalendar(INE: string): Promise<EDT | undefined> {
     const edt = await fetch(
         `https://api-uca-edt.triformine.dev/api/edt/${INE}`,
         {
@@ -59,9 +62,7 @@ async function getCalendar(INE: string): Promise<EDT> {
         }
     ).then((res) => res.json())
 
-    if (edt.error) {
-        throw new Error(edt.error)
-    }
+    if (edt.error) return undefined
 
     return edt
 }
@@ -69,12 +70,34 @@ async function getCalendar(INE: string): Promise<EDT> {
 export const dynamicParams = true
 export const dynamic = 'auto'
 
+type Props = {
+    params: { INE: string }
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+    return {
+        metadataBase: new URL('https://uca-edt.triformine.dev'),
+        title: 'Votre Emploi Du Temps | Emploi du Temps - UCA',
+        description:
+            "Ce site est fait par des étudiants pour les étudiants du Campus Valrose. Il permet d'obtenir votre emploi du temps, en fournissant votre numéro étudiant.",
+        openGraph: {
+            type: 'website',
+            locale: 'fr_FR',
+            siteName: 'EDT UCA',
+        },
+        alternates: {
+            canonical: `/edt/${params.INE}`,
+        },
+    }
+}
+
 export default async function Page({ params }: { params: { INE: string } }) {
     const edt = await getCalendar(params.INE)
     let icalendar: ICalendar | null = null
 
     if (!edt) {
-        console.log('No EDT found for INE', params.INE)
+        deleteCookie('ine')
+        redirect('/?invalid=true')
     }
 
     const schedulerData: Array<Appointment> = edt.edt
