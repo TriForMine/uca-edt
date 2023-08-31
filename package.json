@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "cookies-next": "^3.0.0",
-    "datebook": "^7.1.2",
+    "datebook": "^8.0.0",
     "devextreme": "^23.1.4",
     "devextreme-react": "^23.1.4",
     "next": "^13.4.19",
