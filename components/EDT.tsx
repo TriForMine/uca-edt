@@ -1,59 +1,101 @@
-import { AppointmentModel, ViewState } from '@devexpress/dx-react-scheduler'
-import {
-    Scheduler,
-    WeekView,
-    DayView,
-    Appointments,
-    CurrentTimeIndicator,
-    DateNavigator,
-    Toolbar,
-    TodayButton,
-    AppointmentTooltip,
-} from '@devexpress/dx-react-scheduler-material-ui'
-import {
-    CustomAppointment,
-    CustomAppointmentContent,
-} from './CustomAppointment'
-import { CustomTooltipContent } from './CustomAppointmentTooltip'
+'use client'
+import 'devextreme/dist/css/dx.dark.css'
 
-export default function EDT({
-    showWeekView,
-    schedulerData,
-}: {
-    showWeekView: boolean
-    schedulerData: Array<AppointmentModel>
-}) {
+import { Resource, Scheduler, Scrolling } from 'devextreme-react/scheduler'
+import { Appointment } from 'devextreme/ui/scheduler'
+import React from 'react'
+import frMessages from 'devextreme/localization/messages/fr.json'
+import { locale, loadMessages } from 'devextreme/localization'
+import Devices from 'devextreme/core/devices'
+
+const contrastColor = (c: string) =>
+    ['text-black', 'text-white'][
+        ~~(
+            [0.299, 0.587, 0.114].reduce(
+                (r, v, i) => parseInt(c.substr(i * 2 + 1, 2), 16) * v + r,
+                0
+            ) < 128
+        )
+    ]
+
+const renderAppointment = (model: any) => {
+    const { targetedAppointmentData } = model.data
+
     return (
-        /*
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore */
-        <Scheduler locale="fr-fr" data={schedulerData}>
-            <ViewState />
-            {showWeekView ? (
-                <WeekView
-                    cellDuration={60}
-                    excludedDays={[0, 6]}
-                    startDayHour={8}
-                    endDayHour={20}
-                />
-            ) : (
-                <DayView cellDuration={60} startDayHour={8} endDayHour={20} />
-            )}
-            <Appointments
-                appointmentContentComponent={CustomAppointmentContent}
-                appointmentComponent={CustomAppointment}
-            />
-            <AppointmentTooltip
-                contentComponent={CustomTooltipContent}
-                showCloseButton
-            />
-            <CurrentTimeIndicator
-                shadePreviousAppointments
-                shadePreviousCells
-            />
-            <Toolbar />
-            <DateNavigator />
-            <TodayButton messages={{ today: "Aujourd'hui" }} />
-        </Scheduler>
+        <React.Fragment>
+            <p
+                className={`${contrastColor(
+                    targetedAppointmentData.color
+                )} text-bold text-base`}
+            >
+                {targetedAppointmentData.text}
+            </p>
+            <p className={`${contrastColor(targetedAppointmentData.color)}`}>
+                {targetedAppointmentData.startDate.toLocaleTimeString('fr-FR', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                })}{' '}
+                -{' '}
+                {targetedAppointmentData.endDate.toLocaleTimeString('fr-FR', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                })}
+            </p>
+            <p className={`${contrastColor(targetedAppointmentData.color)}`}>
+                {targetedAppointmentData.room}
+            </p>
+        </React.Fragment>
     )
 }
+
+export const EDT = ({
+    schedulerData,
+    colors,
+    rooms,
+}: {
+    schedulerData: Array<Appointment>
+    colors: Array<{
+        id: string
+        color: string
+        text: string
+    }>
+    rooms: Array<{
+        id: string
+        color: string
+        text: string
+    }>
+}) => {
+    loadMessages(frMessages)
+    locale('fr')
+
+    return (
+        <div>
+            <Scheduler
+                timeZone={'Europe/Paris'}
+                dataSource={schedulerData}
+                editing={false}
+                defaultCurrentView={Devices.real().phone ? 'day' : 'workWeek'}
+                views={['workWeek', 'day']}
+                showCurrentTimeIndicator
+                adaptivityEnabled={Devices.real().phone}
+                startDayHour={8}
+                endDayHour={20}
+                cellDuration={60}
+                showAllDayPanel={false}
+                firstDayOfWeek={1}
+                appointmentComponent={renderAppointment}
+            >
+                <Scrolling mode="virtual" />
+                <Resource
+                    dataSource={colors}
+                    fieldExpr="course"
+                    label="Cours"
+                    useColorAsDefault
+                />
+                <Resource dataSource={rooms} fieldExpr="room" label="Salle" />
+            </Scheduler>
+        </div>
+    )
+}
+
+export default EDT

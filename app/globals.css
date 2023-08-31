@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.auth-container {
+    @apply flex flex-row items-center justify-center space-x-2 py-2 flex-wrap;
+}
+
+.auth-container input {
+    @apply input input-bordered w-full max-w-xs text-center text-lg mt-2 sm:mt-0;
+    height: 50px;
+    width: 50px;
+}

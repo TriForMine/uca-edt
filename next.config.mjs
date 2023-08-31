@@ -1,9 +1,3 @@
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-    enabled: process.env.ANALYZE === 'true',
-})
-
-const withPreact = require('next-plugin-preact')
-
 const ContentSecurityPolicy = `default-src 'self'; script-src 'unsafe-inline' 'unsafe-eval' 'report-sample' 'self'; style-src 'unsafe-inline' 'report-sample' 'self'; object-src 'none'; base-uri 'self'; connect-src https://api-uca-edt.triformine.dev 'self'; font-src 'self' https://fonts.gstatic.com; frame-src 'self'; img-src 'self'; manifest-src 'self'; media-src 'self'; worker-src 'self';`
 
 const securityHeaders = [
@@ -38,23 +32,28 @@ const securityHeaders = [
 ]
 
 /** @type {import('next').NextConfig} */
-const nextConfig = withPreact(
-    withBundleAnalyzer({
-        reactStrictMode: true,
-        swcMinify: true,
-        output: 'standalone',
-        experimental: {
-            esmExternals: false,
-        },
-        async headers() {
-            return [
-                {
-                    source: '/:path*',
-                    headers: securityHeaders,
-                },
-            ]
-        },
-    })
-)
+const nextConfig = {
+    reactStrictMode: true,
+    swcMinify: true,
+    output: 'standalone',
+    async headers() {
+        return [
+            {
+                source: '/:path*',
+                headers: securityHeaders,
+            },
+        ]
+    },
+    transpilePackages: [
+        '@mui/system',
+        '@mui/material',
+        '@mui/icons-material',
+        'rrule',
+        '@devexpress/dx-react-core',
+        '@devexpress/dx-scheduler-core',
+        '@devexpress/dx-react-scheduler-material-ui',
+        '@devexpress/dx-react-scheduler',
+    ],
+}
 
-module.exports = nextConfig
+export default nextConfig

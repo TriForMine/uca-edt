@@ -1,33 +1,15 @@
-import * as React from 'react'
-import type {
-    GetStaticPaths,
-    GetStaticProps,
-    InferGetStaticPropsType,
-    NextPage,
-} from 'next'
-import Typography from '@mui/material/Typography'
-import {
-    Alert,
-    Button,
-    CircularProgress,
-    Stack,
-    useMediaQuery,
-} from '@mui/material'
-import Link from 'next/link'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import GetAppIcon from '@mui/icons-material/GetApp'
-import { useTheme } from '@mui/system'
-import axios from 'axios'
-import { useRouter } from 'next/router'
-import useSWR from 'swr'
-import { EDT } from '../../src/types'
-import { NextSeo } from 'next-seo'
-import dynamic from 'next/dynamic'
-import { Suspense } from 'react'
+import { EDT } from '@/types'
 import { ICalendar } from 'datebook'
-import { deleteCookie } from 'cookies-next'
+import * as React from 'react'
+import dynamic_import from 'next/dynamic'
+import { DownloadCalendar } from '../../../components/DownloadCalendar'
+import { LogoutButton } from '../../../components/LogoutButton'
+import type { Appointment } from 'devextreme/ui/scheduler/'
 
-const EDTTable = dynamic(() => import('../../components/EDT'))
+const EDTTable = dynamic_import(() => import('../../../components/EDT'), {
+    ssr: true,
+    loading: () => <span className="loading loading-ring loading-lg"></span>,
+})
 
 const calculateDayOffset = (day: EDT['edt'][0]['day']) => {
     switch (day) {
@@ -67,25 +49,35 @@ function hourStringToHourMinutes(str?: string) {
     }
 }
 
-const EDT: NextPage = (
-    props: InferGetStaticPropsType<typeof getStaticProps>
-) => {
-    const router = useRouter()
-    const theme = useTheme()
-    const showWeekView = useMediaQuery(theme.breakpoints.up('sm'))
-
-    const { data: edt } = useSWR<EDT>(
-        router?.query?.INE ? `/edt/${router.query.INE}` : null,
+async function getCalendar(INE: string): Promise<EDT> {
+    const edt = await fetch(
+        `https://api-uca-edt.triformine.dev/api/edt/${INE}`,
         {
-            fallbackData: props.data,
+            next: {
+                revalidate: 360,
+            },
         }
-    )
+    ).then((res) => res.json())
 
-    if (!edt) return <CircularProgress />
+    if (edt.error) {
+        throw new Error(edt.error)
+    }
 
-    let icalendar: ICalendar
+    return edt
+}
 
-    const schedulerData = edt.edt
+export const dynamicParams = true
+export const dynamic = 'auto'
+
+export default async function Page({ params }: { params: { INE: string } }) {
+    const edt = await getCalendar(params.INE)
+    let icalendar: ICalendar | null = null
+
+    if (!edt) {
+        console.log('No EDT found for INE', params.INE)
+    }
+
+    const schedulerData: Array<Appointment> = edt.edt
         .filter((course) => {
             return !(
                 course.type === 'CM' &&
@@ -171,115 +163,98 @@ const EDT: NextPage = (
             }
 
             return {
-                title: `${course.type} - ${course.name}`,
-                color: stringToColor(`${course.name?.replaceAll(' - TP', '')}`),
-                location: course.salle,
+                text: `${course.type} - ${course.name}`,
+                type: course.type,
+                course: course.name,
+                color: course.name ? stringToColor(course.name) : '#000000',
+                room: course.salle,
                 startDate,
                 endDate,
-                rRule: 'FREQ=WEEKLY;COUNT=14',
+                recurrenceRule: 'FREQ=WEEKLY;COUNT=14',
             }
         })
 
+    const colors: Array<{
+        id: string
+        color: string
+        text: string
+    }> = []
+
+    schedulerData.forEach((appointment) => {
+        const color = stringToColor(appointment.course)
+
+        if (!colors.find((color) => color.id === appointment.course)) {
+            colors.push({
+                color,
+                id: appointment.course,
+                text: appointment.course,
+            })
+        }
+    })
+
+    const rooms: Array<{
+        id: string
+        color: string
+        text: string
+    }> = []
+
+    schedulerData.forEach((appointment) => {
+        const color = stringToColor(appointment.room)
+
+        if (!rooms.find((color) => color.id === appointment.room)) {
+            rooms.push({
+                color,
+                id: appointment.room,
+                text: appointment.room,
+            })
+        }
+    })
+
     return (
         <>
-            <NextSeo
-                title="Votre Emploi Du Temps"
-                canonical={`https://uca-edt.triformine.dev/edt/${router?.query?.INE}`}
-            />
-            <Stack sx={{ width: '100%' }} direction="row" justifyContent="left">
-                <Link href="/" passHref>
-                    <Button
-                        onClick={() => {
-                            deleteCookie('ine')
-                        }}
-                        startIcon={<ArrowBackIcon />}
-                        color="error"
-                    >
-                        Changer d&apos;étudiant
-                    </Button>
-                </Link>
-            </Stack>
+            <div className="w-full justify-start">
+                <LogoutButton />
+            </div>
 
-            <Typography variant="h4" component="h1" gutterBottom>
+            <h1 className="py-2 pb-4 text-center text-4xl font-bold">
                 Votre emploi du temps
-            </Typography>
+            </h1>
 
-            <Alert variant="outlined" severity="warning">
+            <div className="alert alert-warning">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="h-6 w-6"
+                >
+                    <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
+                    />
+                </svg>
                 L&apos;emploi du temps est généré automatiquement, et peut
                 contenir des erreurs.
                 <br />
                 Veuillez vous référer à votre emploi du temps officiel, ou aux
                 dernières informations reçues.
-            </Alert>
+            </div>
 
-            <Stack
-                sx={{ width: '100%', my: 3 }}
-                direction="row"
-                justifyContent="center"
-            >
-                <Button
-                    variant="outlined"
-                    color="success"
-                    startIcon={<GetAppIcon />}
-                    onClick={() =>
-                        icalendar.download(`edt-${router.query.INE}.ics`)
-                    }
-                >
-                    Télécharger le Calendrier (iCalendar)
-                </Button>
-            </Stack>
-
-            <Suspense fallback={<CircularProgress />}>
-                <EDTTable
-                    schedulerData={schedulerData}
-                    showWeekView={showWeekView}
+            <div className="flex w-full flex-col items-center justify-center py-8">
+                <DownloadCalendar
+                    ics={(
+                        icalendar as unknown as ICalendar | undefined
+                    )?.render()}
+                    ine={params.INE}
                 />
-            </Suspense>
+            </div>
+            <EDTTable
+                schedulerData={schedulerData}
+                colors={colors}
+                rooms={rooms}
+            />
         </>
     )
 }
-
-export const getStaticPaths: GetStaticPaths = async () => {
-    return {
-        paths: [],
-        fallback: 'blocking', // can also be true or 'blocking'
-    }
-}
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-    try {
-        // `getStaticProps` is executed on the server side.
-        const edt = await axios
-            .get<EDT>(
-                `https://api-uca-edt.triformine.dev/api/edt/${params?.INE}`
-            )
-            .then((res) => res.data)
-
-        if (!edt) {
-            return {
-                redirect: {
-                    destination: '/?invalid=true',
-                    permanent: false,
-                    // statusCode: 301
-                },
-            }
-        }
-
-        return {
-            props: {
-                edt,
-            },
-            revalidate: 360,
-        }
-    } catch (e) {
-        return {
-            redirect: {
-                destination: '/?invalid=true',
-                permanent: false,
-                // statusCode: 301
-            },
-        }
-    }
-}
-
-export default EDT
