@@ -9,7 +9,7 @@
     "lint": "eslint ./ --ext js,jsx,ts,tsx,mjs"
   },
   "dependencies": {
-    "cookies-next": "^3.0.0",
+    "cookies-next": "^4.0.0",
     "datebook": "^8.0.0",
     "devextreme": "^23.1.4",
     "devextreme-react": "^23.1.4",
